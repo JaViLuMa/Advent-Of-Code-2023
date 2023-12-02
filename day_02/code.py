@@ -15,12 +15,6 @@ POSSIBLE_GAME: dict[POSSIBLE_COLORS, int] = {
 }
 
 
-lines: list[str] = []
-
-with open("input.txt") as f:
-    lines = f.read().splitlines()
-
-
 def get_colors(line: str) -> COLORS:
     colors_pattern: Pattern = r"(\d+)\s*(blue|red|green)"
 
@@ -58,6 +52,12 @@ def fewest_number_of_cubes_of_each_color(colors: COLORS):
         multiplied_color_values *= max_value
 
     return multiplied_color_values
+
+
+lines: list[str] = []
+
+with open("input.txt") as f:
+    lines = f.read().splitlines()
 
 
 sum_of_possible_games: int = 0
