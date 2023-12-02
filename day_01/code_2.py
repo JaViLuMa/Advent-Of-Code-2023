@@ -1,5 +1,3 @@
-import re
-
 lines: list[str] = []
 
 with open('input.txt') as f:
