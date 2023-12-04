@@ -6,8 +6,6 @@ winning_numbers: list[list[int]] = []
 numbers_we_have: list[list[int]] = []
 
 for line in lines:
-    match_card_number = re.search(r"Card\s+(\d+):\s+", line).group(1)
-
     winning_and_have_numbers = re.sub(r"Card\s+\d+:\s+", "", line).split("|")
 
     winning = list(
