@@ -11,6 +11,7 @@ for line in lines:
     winning = list(
         map(int, re.sub(r"\s+", " ", winning_and_have_numbers[0]).strip().split(" "))
     )
+    
     have = list(
         map(int, re.sub(r"\s+", " ", winning_and_have_numbers[1]).strip().split(" "))
     )
