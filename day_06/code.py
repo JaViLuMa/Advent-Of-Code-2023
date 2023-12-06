@@ -24,12 +24,12 @@ for line in lines:
         distances = cleared_distances
 
 
-def calculate_num_of_ways_to_beat_record(t: list[int], d: list[int]) -> int:
+def calculate_num_of_ways_to_beat_record(tList: list[int], dList: list[int]) -> int:
     num_of_ways_to_beat_record: int = 1
 
-    for i in range(len(t)):
-        a = t[i] - sqrt(pow(t[i], 2) - (4 * d[i]))
-        b = t[i] + sqrt(pow(t[i], 2) - (4 * d[i]))
+    for t, d in zip(tList, dList):
+        a = t - sqrt(pow(t, 2) - (4 * d))
+        b = t + sqrt(pow(t, 2) - (4 * d))
 
         lower_bound = floor(a / 2)
         upper_bound = ceil(b / 2)
