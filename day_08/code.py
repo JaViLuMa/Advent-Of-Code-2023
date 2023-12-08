@@ -1,3 +1,5 @@
+import math
+
 lines: list[str] = open("input.txt").read().splitlines()
 
 filtered_lines: list[str] = [line.strip() for line in lines if line.strip()]
@@ -12,10 +14,10 @@ for line in filtered_lines:
     graph[node] = tuple(vertices.strip("()").split(", "))
 
 
-def reach_zzz() -> int:
+def reach(curr_node: str, condition: bool) -> int:
     steps: int = 0
     end_reached: bool = False
-    current_node: str = "AAA"
+    current_node: str = curr_node
 
     while not end_reached:
         for direction in directions:
@@ -23,7 +25,7 @@ def reach_zzz() -> int:
 
             steps += 1
 
-            if current_node == "ZZZ":
+            if condition(current_node):
                 end_reached = True
 
                 break
@@ -34,28 +36,16 @@ def reach_zzz() -> int:
 def ghost_all_reach_z() -> int:
     start_nodes = [node for node in graph.keys() if node.endswith("A")]
 
-    ghosts = {node: 0 for node in start_nodes}
-    ghost_positions = {node: node for node in start_nodes}
+    steps_of_each_start_node: list[int] = []
 
-    total_steps = 0
-    while True:
-        for ghost in list(ghosts):
-            direction_index = ghosts[ghost]
+    for start_node in start_nodes:
+        steps_of_each_start_node.append(
+            reach(start_node, lambda node: node.endswith("Z"))
+        )
 
-            direction = directions[direction_index % len(directions)]
-
-            next_node = graph[ghost_positions[ghost]][0 if direction == "L" else 1]
-
-            ghost_positions[ghost] = next_node
-
-            ghosts[ghost] = (direction_index + 1) % len(directions)
-
-        total_steps += 1
-
-        if all(node.endswith("Z") for node in ghost_positions.values()):
-            break
-
-    return total_steps
+    return math.lcm(*steps_of_each_start_node)
 
 
-print(f"Part 1: {reach_zzz()} | Part 2: {ghost_all_reach_z()}")
+print(
+    f"Part 1: {reach('AAA', lambda node: node == 'ZZZ')} | Part 2: {ghost_all_reach_z()}"
+)
