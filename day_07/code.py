@@ -1,9 +1,5 @@
 from collections import Counter
 
-
-lines: list[str] = open("input.txt").read().splitlines()
-
-
 STRENGTHS: dict[str, int] = {
     "2": 2,
     "3": 3,
@@ -24,55 +20,55 @@ STRENGTHS: dict[str, int] = {
 HAND_TYPE = tuple[tuple[int], int]
 HANDS_TYPE = list[HAND_TYPE]
 
+
+lines: list[str] = open("input.txt").read().splitlines()
+
 hands: HANDS_TYPE = []
-
-
-def counter_values(hand: HAND_TYPE) -> Counter[int]:
-    return Counter(hand).values()
-
-
-def sorted_hand(hand: HAND_TYPE) -> tuple[int]:
-    return tuple(sorted(counter_values(hand), reverse=True))
-
-
-def handle_jokers(hand: HAND_TYPE):
-    number_of_jokers: int = hand.count(11)
-
-    hand_with_joker_value: tuple[int] = ()
-    hand_without_jokers: tuple[int] = ()
-
-    for card in hand:
-        if card == 11:
-            hand_with_joker_value += (1,)
-        else:
-            hand_without_jokers += (card,)
-            hand_with_joker_value += (card,)
-
-    strength = list(sorted_hand(hand_without_jokers))
-
-    if not strength:
-        strength = (5,)
-    else:
-        strength[0] += number_of_jokers
-
-    return tuple(strength), hand_with_joker_value
+hands_with_jokers: HANDS_TYPE = []
 
 
 for line in lines:
     hand_original, bid = line.split(" ")
 
-    hand: tuple[int] = tuple(STRENGTHS[card] for card in hand_original)
+    hand_strength: tuple[int] = tuple(STRENGTHS[card] for card in hand_original)
+    hand_values: tuple[int] = tuple(
+        sorted(Counter(hand_original).values(), reverse=True)
+    )
 
-    hands.append((hand, int(bid)))
+    joker_count: int = hand_strength.count(11)
+
+    hand_with_joker_value: tuple[int] = tuple(
+        1 if card == 11 else card for card in hand_strength
+    )
+
+    hand_without_jokers: tuple[int] = tuple(
+        card for card in hand_strength if card != 11
+    )
+
+    hand_without_jokers_values = Counter(hand_without_jokers).values()
+
+    sorted_hand_without_jokers: list[int] = list(
+        sorted(hand_without_jokers_values, reverse=True)
+    )
+
+    if not sorted_hand_without_jokers:
+        sorted_hand_without_jokers = (5,)
+    else:
+        sorted_hand_without_jokers[0] += joker_count
+
+        sorted_hand_without_jokers = tuple(sorted_hand_without_jokers)
+
+    hands.append((hand_strength, hand_values, int(bid)))
+    hands_with_jokers.append(
+        (hand_with_joker_value, sorted_hand_without_jokers, int(bid))
+    )
 
 
-sorted_hands: HANDS_TYPE = sorted(
-    hands, key=lambda hand: (tuple(sorted_hand(hand[0])), hand[0])
+sorted_hands = sorted(hands, key=lambda hand: (hand[1], hand[0]))
+sorted_hands_with_jokers = sorted(
+    hands_with_jokers, key=lambda hand: (hand[1], hand[0])
 )
 
-sorted_hands_with_jokers: HANDS_TYPE = sorted(
-    hands, key=lambda hand: handle_jokers(hand[0])
-)
 
 total_winnings: int = sum(hand[-1] * rank for rank, hand in enumerate(sorted_hands, 1))
 total_winnings_with_jokers: int = sum(
