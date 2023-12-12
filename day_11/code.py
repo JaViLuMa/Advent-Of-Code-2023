@@ -45,7 +45,7 @@ def get_shortest_path_sum(
     distance_adder = 1 if not expanded else 999999
 
     for row_index, row in enumerate(coords):
-        for col_index, col in enumerate(coords[:row_index]):
+        for _, col in enumerate(coords[:row_index]):
             x_max, x_min = max(row[0], col[0]), min(row[0], col[0])
             y_max, y_min = max(row[1], col[1]), min(row[1], col[1])
 
