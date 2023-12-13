@@ -5,11 +5,6 @@ TR_MIRROR = list[tuple[str]]
 MIRRORS = list[MIRROR]
 
 
-def matrix_print(matrix: list[list[str]]) -> None:
-    for row in matrix:
-        print(*row)
-
-
 def parse_mirrors() -> MIRRORS:
     mirrors: MIRRORS = []
 
