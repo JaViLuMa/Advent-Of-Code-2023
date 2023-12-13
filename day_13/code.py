@@ -1,5 +1,6 @@
 lines: list[str] = open("input.txt").read().split("\n\n")
 
+
 MIRROR = list[str]
 TR_MIRROR = list[tuple[str]]
 MIRRORS = list[MIRROR]
