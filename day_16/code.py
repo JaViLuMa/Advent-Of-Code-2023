@@ -13,11 +13,6 @@ TILE = tuple[int, int, int, int]
 TILES = list[TILE]
 
 
-def matrix_print(matrix: MATRIX) -> None:
-    for row in matrix:
-        print(*row)
-
-
 def check_if_matrix_border(contraption: MATRIX, row: int, column: int) -> bool:
     return (
         row < 0
