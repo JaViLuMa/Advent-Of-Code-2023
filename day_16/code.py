@@ -8,7 +8,6 @@ LEFT_RIGHT = [(0, 1), (0, -1)]
 MATRIX = list[list[str]]
 COORD_KEY = tuple[int, int]
 COORD_VALUE = dict[str, int | str]
-COORDS_MAP = dict[COORD_KEY, COORD_VALUE]
 TILE = tuple[int, int, int, int]
 TILES = list[TILE]
 
