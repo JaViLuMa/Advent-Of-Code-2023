@@ -13,24 +13,6 @@ TILE = tuple[int, int, int, int]
 TILES = list[TILE]
 
 
-def matrix_print(matrix: MATRIX) -> None:
-    for row in matrix:
-        print(*row)
-
-
-def get_coords_map(matrix: MATRIX) -> COORDS_MAP:
-    coords_map = {}
-
-    for row in range(len(matrix)):
-        for col in range(len(matrix[row])):
-            coords_map[(row, col)] = {
-                "type": matrix[row][col],
-                "energy": 0,
-            }
-
-    return coords_map
-
-
 def check_if_matrix_border(contraption: MATRIX, row: int, column: int) -> bool:
     return (
         row < 0
