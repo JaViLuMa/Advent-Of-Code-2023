@@ -4,7 +4,7 @@ from collections import deque
 
 
 BUTTON_PRESSES = 1000
-BUTTON_PRESSES_2 = 5000
+BUTTON_PRESSES_FOR_RX = 5000
 
 
 def populate_modules_memory(modules):
@@ -71,7 +71,7 @@ def get_product_of_low_and_high_pulses(modules):
 def get_minimal_button_presses_to_deliver_low_pulse_to_rx(modules):
     conjuction_module_cycles = {}
 
-    for cycle in range(1, BUTTON_PRESSES_2):
+    for cycle in range(1, BUTTON_PRESSES_FOR_RX):
         modules_queue = deque(
             [
                 ("broadcaster", destination, "low")
