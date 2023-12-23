@@ -1,5 +1,4 @@
 from copy import deepcopy
-from collections import deque
 
 
 ADJACENT_DIRECTIONS = [
